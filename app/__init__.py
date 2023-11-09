@@ -3,4 +3,3 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-cors = CORS(app, origins=["http://localhost:3000"])

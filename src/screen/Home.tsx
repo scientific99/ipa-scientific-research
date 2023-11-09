@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Header from "./Header";
 import axios from "axios";
+import { useState } from "react";
+import Header from "./Header";
 
 interface Region {
   value: string;
@@ -25,7 +25,7 @@ export function Home() {
       "application/json charset=utf-8";
 
     axios
-      .post("http://localhost:9000/api/v1.0/translate", { text_input: e })
+      .post("http://127.0.0.1:9000/api/v1.0/translate", { text_input: e })
       .then((response) => {
         console.log(response.data.data);
         var data = response.data.data;

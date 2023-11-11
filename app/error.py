@@ -1,7 +1,6 @@
-from flask import jsonify
-from flask_cors import cross_origin
+from flask import Blueprint, jsonify
 
-from app import app
+error_blueprint = Blueprint("error", __name__)
 
 
 class InvalidAPIUsage(Exception):
@@ -20,15 +19,13 @@ class InvalidAPIUsage(Exception):
         return rv
 
 
-@app.errorhandler(404)
-@cross_origin
+@error_blueprint.errorhandler(404)
 def resource_not_found(e):
     response = jsonify(error=str(e))
     return response, 404
 
 
-@app.errorhandler(InvalidAPIUsage)
-@cross_origin
+@error_blueprint.errorhandler(InvalidAPIUsage)
 def invalid_api_usage(e):
     response = jsonify(e.to_dict())
     return response, e.status_code

@@ -25,6 +25,7 @@ import string
 
 from .rules import *
 
+
 # import sys
 
 
@@ -80,14 +81,14 @@ def trans(word, dialect, chao, eight, nosuper, glottal, phonemic):
             ons = onsets[word[0]]
             oOffset = 1
 
-        if word[length - 2 : length] in codas:  # if two-character coda
-            cod = codas[word[length - 2 : length]]
+        if word[length - 2: length] in codas:  # if two-character coda
+            cod = codas[word[length - 2: length]]
             cOffset = 2
         elif word[length - 1] in codas:  # if one-character coda
             cod = codas[word[length - 1]]
             cOffset = 1
 
-        nucl = word[oOffset : length - cOffset]
+        nucl = word[oOffset: length - cOffset]
 
         ##
         # Onsets
@@ -414,9 +415,9 @@ def convert(word, dialect, chao, eight, nosuper, glottal, phonemic, delimit):
             seq = "[" + word + "]"
         else:
             seq = (
-                delimit
-                + delimit.join(filter(None, (ons, gli, nuc, cod, ton)))
-                + delimit
+                    delimit
+                    + delimit.join(filter(None, (ons, gli, nuc, cod, ton)))
+                    + delimit
             )
     except TypeError:
         pass
@@ -424,7 +425,7 @@ def convert(word, dialect, chao, eight, nosuper, glottal, phonemic, delimit):
     return seq
 
 
-def convert_ipa(fh, dialect):
+def vn_to_ipa(fh, dialect):
     chao = False
     delimit = ""
     # dialect = "n"
@@ -501,7 +502,7 @@ def convert_ipa(fh, dialect):
                 # print orthography?
                 if output_ortho:
                     print(ortho, output_ortho, sep="", end="")
-                print(compound)
+                # print(compound)
                 result += compound
         if result != "":
             arr_result.append(result)
@@ -511,7 +512,6 @@ def convert_ipa(fh, dialect):
     #     fh.close()
     # except AttributeError:
     #     sys.exit(0)
-
 
 # if __name__ == "__main__":
 #     convert_ipa()

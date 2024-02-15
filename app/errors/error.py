@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify
 error_blueprint = Blueprint("error", __name__)
 
 
-class InvalidAPIUsage(Exception):
+class InvalidApiUsage(Exception):
     status_code = 400
 
     def __init__(self, message, status_code=None, payload=None):
@@ -25,7 +25,7 @@ def resource_not_found(e):
     return response, 404
 
 
-@error_blueprint.errorhandler(InvalidAPIUsage)
+@error_blueprint.errorhandler(InvalidApiUsage)
 def invalid_api_usage(e):
     response = jsonify(e.to_dict())
     return response, e.status_code

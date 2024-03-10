@@ -6,4 +6,4 @@ COPY app .
 COPY setting.py .
 COPY run.py .
 EXPOSE 9000
-CMD ["python", "app.py"]
+CMD ["python", "run.py"]

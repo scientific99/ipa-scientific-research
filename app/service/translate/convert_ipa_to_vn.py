@@ -28,7 +28,7 @@ def _add_tone(ons, nuc, cod, tone):
 
     list_vowel_bool = [c in list_vowel for c in nuc]
     index_tone = -1
-    print(list_vowel_bool)
+    # print(list_vowel_bool)
     if sum(list_vowel_bool) == 0:
         index_tone = 0
     if sum(list_vowel_bool) == 1:

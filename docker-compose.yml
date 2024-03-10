@@ -1,7 +1,11 @@
 version: '3.8'
 
 services:
-  myapp:
+  backend:
     image: ipa-be:latest
     ports:
       - "9000:9000"
+  frontend:
+    image: ipa-fe:latest
+    ports:
+      - "80:80"

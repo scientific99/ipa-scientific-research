@@ -1,1 +1,4 @@
-export const API_BASE_URL = "http://127.0.0.1:9000/api/v1.0";
+// import * as dotenv from "dotenv";
+// dotenv.config();
+
+export const API_BASE_URL: string = 'http://localhost:9000/api/v1.0';

@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useState } from "react";
 import Header from "./Header";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import CopyLabel from "../components/CopyLabel";
+import {CopyLabel, VoLumeLabel} from "../components/Label";
 import LangButton from "../components/LangButton";
+import { translateTextToIpa, translateTextToSpeech } from "../services/translate.service";
 
 interface Region {
   value: string;
@@ -11,7 +11,6 @@ interface Region {
 
 var regions: Region[] = [
   { value: "Bắc" },
-  // { value: "Trung" },
   { value: "Nam" },
 ];
 
@@ -21,10 +20,6 @@ export function Home() {
   const [langText, setLangTest] = useState("Bắc");
   const defautMaxHeight = 150;
   const [maxHeight, setMaxHeight] = useState(defautMaxHeight + "px");
-  const handleDivClick = (e: string) => {
-    setLangTest(e);
-    handleTranslate(inputText, e);
-  };
 
   const handleChangeRowArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);
@@ -32,25 +27,18 @@ export function Home() {
     e.target.style.height = "auto";
     e.target.style.height =
       Math.max(defautMaxHeight, e.target.scrollHeight + 7) + "px";
-    // console.log(e.target.scrollHeight + 7);
     setMaxHeight(e.target.style.height);
   };
 
-  const handleTranslate = (inputData: string, region: string) => {
-    axios.defaults.headers.common["Content-Type"] =
-      "application/json charset=utf-8";
-
-    axios
-      .post("http://127.0.0.1:9000/api/v1.0/translate", {
-        text_input: inputData,
-        region: region,
-      })
-      .then((response) => {
-        console.log(response.data.data);
-        var data = response.data.data;
-        setOutputText(data);
-      });
+  const handleTranslate = async (inputData: string, region: string) => {
+    try {
+      var output = await translateTextToIpa(inputData, region);
+      setOutputText(output);
+    } catch (error) {
+      console.error("Error while translating:", error);
+    }
   };
+
   return (
     <div className="overflow-y-scro h-screen w-screen justify-center">
       <Header />
@@ -67,11 +55,8 @@ export function Home() {
                   handleTranslate(e.target.value, langText);
                   handleChangeRowArea(e);
                 }}
-                // placeholder="Nhập dữ liệu"
               />
-              <CopyToClipboard text={inputText}>
-                <CopyLabel />
-              </CopyToClipboard>
+              <CopyToClipboard text={inputText}><CopyLabel /></CopyToClipboard>
             </div>
           </div>
 
@@ -84,7 +69,7 @@ export function Home() {
                       ? "translate-c bg-blue-100 text-[#1967d2] underline-offset-1 transition-colors duration-300"
                       : "bg-white text-gray-700"
                   }`}
-                  onClick={(e) => handleDivClick(region.value)}
+                  onClick={(e) => {setLangTest(region.value); handleTranslate(inputText, region.value);}}
                 >
                   <p>{region.value}</p>
                 </div>
@@ -100,9 +85,8 @@ export function Home() {
                 placeholder="Bản dịch"
               />
               <div>
-                <CopyToClipboard text={outputText}>
-                  <CopyLabel />
-                </CopyToClipboard>
+                <CopyToClipboard text={outputText}><CopyLabel /></CopyToClipboard>
+                <VoLumeLabel onClick={(e) => translateTextToSpeech(outputText, "ipa", "vi")}/>
               </div>
             </div>
           </div>

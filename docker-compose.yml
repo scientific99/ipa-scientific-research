@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  myapp:
+    image: ipa-be:latest
+    ports:
+      - "9000:9000"

@@ -1,14 +1,58 @@
 from .rules import *
+import re
+
+_split_chars = lambda fh: [c for c in re.sub(r'\s+', ' ', fh).split(" ")]
+_check_dau_phu = lambda x: x in ["ă", "â", "ư", "ê", "ô", "ơ"]
 
 
-def _split_chars(fh: str):
-    _fh = fh.replace("\n", " ")
-    _fh = _fh.replace("\t", " ")
-    chars = _fh.split(" ")
-    return [c for c in chars if c != ""]
+def _add_tone(ons, nuc, cod, tone):
+    if nuc == "":
+        return nuc
+    tone_name = ""
+    if tone == 'ᴬ¹':
+        return nuc
+    elif tone == 'ᴬ²':
+        tone_name = "huyen"
+    elif tone == 'ᴮ¹':
+        tone_name = "sac"
+    elif tone == 'ᴮ²':
+        tone_name = "nang"
+    elif tone == 'ᶜ¹':
+        tone_name = "hoi"
+    elif tone == 'ᶜ²':
+        tone_name = "nga"
+    elif tone == 'ᴰ¹':
+        tone_name = "sac"
+    elif tone == 'ᴰ²':
+        tone_name = "nang"
+
+    list_vowel_bool = [c in list_vowel for c in nuc]
+    index_tone = -1
+    print(list_vowel_bool)
+    if sum(list_vowel_bool) == 0:
+        index_tone = 0
+    if sum(list_vowel_bool) == 1:
+        index_tone = list_vowel_bool.index(True)
+    else:
+        index_tone = list_vowel_bool.index(True)
+        # index_tone = -1
+        # for _i in range(len(nuc)):
+        #     if _check_dau_phu(nuc[_i]):
+        #         index_tone = _i
+        #         break
+
+    if index_tone != -1:
+        nuc = nuc[: index_tone + 1] + tone_unicode[tone_name] + nuc[index_tone + 1:]
+
+    # try:
+    #     nuc = nuc[0] + tone_unicode[tone_name] + nuc[1:]
+    # except IndexError:
+    #     return nuc
+
+    return nuc
 
 
-def get_dict_by_value(chars: str, _dict: dict):
+def _get_dict_by_value(chars: str, _dict: dict):
     arr_result = [("", "")]
     for key, value in _dict.items():
         if value == chars[:len(value)]:
@@ -33,24 +77,25 @@ def _convert_by_char(chars):
             ons = ""
             _offset = 1
         elif chars[0] == "w":  # no onset
-            ons = "u"
+            ons = ""
+            nuc = "u"
             _offset = 1
         elif chars[:2] == 'tɕ':
             ons = "ch"
             _offset = 2
         else:
-            ons_key, ons_value = get_dict_by_value(chars[_offset:], onsets)
+            ons_key, ons_value = _get_dict_by_value(chars[_offset:], onsets)
             ons = ons_key
             _offset += len(ons_value)
 
         # nuclei
         if len(chars[_offset:]) > 0:
-            nuc_key, nuc_value = get_dict_by_value(chars[_offset:], offglides)
+            nuc_key, nuc_value = _get_dict_by_value(chars[_offset:], offglides)
             if nuc_key == "":
-                nuc_key, nuc_value = get_dict_by_value(chars[_offset:], nuclei)
+                nuc_key, nuc_value = _get_dict_by_value(chars[_offset:], nuclei)
             if nuc_key == "":
-                nuc_key, nuc_value = get_dict_by_value(chars[_offset], onoffglides)
-            nuc = nuc_key
+                nuc_key, nuc_value = _get_dict_by_value(chars[_offset], onoffglides)
+            nuc += nuc_key
             _offset += len(nuc_value)
 
         # last
@@ -61,32 +106,22 @@ def _convert_by_char(chars):
                 "nh": "ʲŋ",
                 "ch": "ʲk"
             }
-            cod_key, cod_value = get_dict_by_value(chars[_offset:], _dict_special)
+            cod_key, cod_value = _get_dict_by_value(chars[_offset:], _dict_special)
             if cod_key == "":
-                cod_key, cod_value = get_dict_by_value(chars[_offset:], codas)
+                cod_key, cod_value = _get_dict_by_value(chars[_offset:], codas)
             cod = cod_key
             _offset += len(cod_value)
+
+        # refactor
+        if len(nuc) >= 3:
+            if ("i" in nuc[1: len(nuc) - 1]) or (nuc[-1] == "i" and cod != "") :
+                nuc = nuc.replace("i", "y")
+
+        if nuc == "uya" and cod != "":
+            nuc = "uyê"
         # tone
         tone = chars[-2:]
-        try:
-            if tone == 'ᴬ¹':
-                pass
-            elif tone == 'ᴬ²':
-                nuc = nuc[0] + tone_unicode["huyen"] + nuc[1:]
-            elif tone == 'ᴮ¹':
-                nuc = nuc[0] + tone_unicode["sac"] + nuc[1:]
-            elif tone == 'ᴮ²':
-                nuc = nuc[0] + tone_unicode["nang"] + nuc[1:]
-            elif tone == 'ᶜ¹':
-                nuc = nuc[0] + tone_unicode["hoi"] + nuc[1:]
-            elif tone == 'ᶜ²':
-                nuc = nuc[0] + tone_unicode["nga"] + nuc[1:]
-            elif tone == 'ᴰ¹':
-                nuc = nuc[0] + tone_unicode["sac"] + nuc[1:]
-            elif tone == 'ᴰ²':
-                nuc = nuc[0] + tone_unicode["nang"] + nuc[1:]
-        except IndexError:
-            pass
+        nuc = _add_tone(ons, nuc, cod, tone)
 
     output = " ".join([ons + nuc + cod])
     return output
@@ -96,3 +131,8 @@ def ipa_to_vn(fh: str = ""):
     chars = _split_chars(fh)
     result = [_convert_by_char(c) for c in chars]
     return " ".join(filter(None, result))
+
+
+if __name__ == '__main__':
+    # luyến
+    ipa_to_vn("lʷiənᴮ¹")

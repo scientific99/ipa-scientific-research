@@ -24,6 +24,6 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           # Thực hiện các lệnh trên server
-          cd /app/
+          cd /app/be
           sh run-project.sh
 

@@ -154,8 +154,12 @@ def _convert_by_char(chars):
             nuc = "ô"
 
         if cod != "":
-            if nuc == "ia":
-                nuc = "iê"
+            if nuc[-2:] == "ia":
+                nuc = nuc[0:-2] + "iê"
+            elif nuc[-2:] == "ưa":
+                nuc = nuc[0:-2] + "ươ"
+            elif nuc[-2:] == "ua":
+                nuc = nuc[0:-2] + "uô"
 
         nuc = _add_tone(ons, nuc, cod, tone)
 

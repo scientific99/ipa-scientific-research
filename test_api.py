@@ -28,7 +28,7 @@ from app.service.translate.convert_vn_to_ipa import vn_to_ipa
 # #
 
 
-input_text = "việt"
+input_text = "Tiếng Việt"
 print(len("ʲŋ"))
 ipa_bac = vn_to_ipa(input_text, "n")
 ipa_nam = vn_to_ipa(input_text, "s")

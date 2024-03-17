@@ -142,6 +142,7 @@ def _convert_by_char(chars):
                 nuc_mid = _get_key_nuc(chars_fix[1:])
 
             nuc += nuc_mid
+
         # refactor
         if len(nuc) >= 3:
             if ("i" in nuc[1: len(nuc) - 1]) or (nuc[-1] == "i" and cod != "") :
@@ -151,6 +152,10 @@ def _convert_by_char(chars):
             nuc = "uyê"
         elif nuc == "ôô":
             nuc = "ô"
+
+        if cod != "":
+            if nuc == "ia":
+                nuc = "iê"
 
         nuc = _add_tone(ons, nuc, cod, tone)
 

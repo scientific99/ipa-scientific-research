@@ -5,7 +5,14 @@ services:
     image: ipa-be:latest
     ports:
       - "9000:9000"
+    networks:
+      - ipa-network
   frontend:
     image: ipa-fe:latest
     ports:
       - "80:80"
+    networks:
+      - ipa-network
+networks:
+  ipa-network:
+    driver: bridge

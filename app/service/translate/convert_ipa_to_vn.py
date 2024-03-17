@@ -29,9 +29,11 @@ def _add_tone(ons, nuc, cod, tone):
     list_vowel_bool = [c in list_vowel for c in nuc]
     index_tone = -1
     # print(list_vowel_bool)
-    if sum(list_vowel_bool) == 0:
+    if nuc[:2] in ["iê", "yê", "uô", "ươ", "uâ"] and len(nuc) >= 2:
+        index_tone = 1
+    elif sum(list_vowel_bool) == 0:
         index_tone = 0
-    if sum(list_vowel_bool) == 1:
+    elif sum(list_vowel_bool) == 1:
         index_tone = list_vowel_bool.index(True)
     else:
         index_tone = list_vowel_bool.index(True)
@@ -61,6 +63,22 @@ def _get_dict_by_value(chars: str, _dict: dict):
     arr_result.sort(key=lambda x: len(x[1]), reverse=True)
     return arr_result[0]
 
+def _get_key_nuc(char):
+    nuc_key = ""
+    nuc_value = ""
+    if char == "oːj":
+        nuc_key = "ôi"
+    elif len(char) > 0:
+        nuc_key, nuc_value = _get_dict_by_value(char, offglides)
+        if nuc_key == "":
+            nuc_key, nuc_value = _get_dict_by_value(char, nuclei)
+        if nuc_key == "":
+            nuc_key, nuc_value = _get_dict_by_value(char, onoffglides)
+
+    if nuc_value != char:
+        return ""
+    else:
+        return nuc_key
 
 def _convert_by_char(chars):
     # get ons
@@ -87,31 +105,43 @@ def _convert_by_char(chars):
             ons_key, ons_value = _get_dict_by_value(chars[_offset:], onsets)
             ons = ons_key
             _offset += len(ons_value)
+        chars_fix = chars[_offset:]
 
-        # nuclei
-        if len(chars[_offset:]) > 0:
-            nuc_key, nuc_value = _get_dict_by_value(chars[_offset:], offglides)
-            if nuc_key == "":
-                nuc_key, nuc_value = _get_dict_by_value(chars[_offset:], nuclei)
-            if nuc_key == "":
-                nuc_key, nuc_value = _get_dict_by_value(chars[_offset], onoffglides)
-            nuc += nuc_key
-            _offset += len(nuc_value)
+        # tone
+        tone = chars_fix[-2:]
+        chars_fix = chars_fix[:-2]
 
-        # last
-        if len(chars[_offset:]) > 0:
-            _dict_special = {
-                "ng": "ŋ͡m",
-                "c": "k͡p",
-                "nh": "ʲŋ",
-                "ch": "ʲk"
-            }
-            cod_key, cod_value = _get_dict_by_value(chars[_offset:], _dict_special)
-            if cod_key == "":
-                cod_key, cod_value = _get_dict_by_value(chars[_offset:], codas)
-            cod = cod_key
-            _offset += len(cod_value)
+        # cod
+        _dict_special = {
+            "ng": "ŋ͡m",
+            "c": "k͡p",
+            "nh": "ʲŋ",
+            "ch": "ʲk"
+        }
+        for spec in _dict_special:
+            if chars_fix.endswith(_dict_special[spec]):
+                cod = spec
+                chars_fix = chars_fix[:-len(_dict_special[spec])]
+                break
+        if cod == "":
+            cod_key, cod_value = _get_dict_by_value(chars_fix[-1], codas)
+            if cod_value != "":
+                chars_fix = chars_fix[:-1]
+                cod = cod_key
 
+        # nuc
+        nuc_mid = _get_key_nuc(chars_fix)
+        if nuc_mid == "":
+            chars_fix = chars_fix.replace(":", "").replace(chr(720), "")
+            nuc = _get_key_nuc(chars_fix)
+
+        nuc += nuc_mid
+        if len(nuc) == 0:
+            if chars_fix[0] == 'ʷ':
+                nuc = "u"
+                nuc_mid = _get_key_nuc(chars_fix[1:])
+
+            nuc += nuc_mid
         # refactor
         if len(nuc) >= 3:
             if ("i" in nuc[1: len(nuc) - 1]) or (nuc[-1] == "i" and cod != "") :
@@ -119,8 +149,9 @@ def _convert_by_char(chars):
 
         if nuc == "uya" and cod != "":
             nuc = "uyê"
-        # tone
-        tone = chars[-2:]
+        elif nuc == "ôô":
+            nuc = "ô"
+
         nuc = _add_tone(ons, nuc, cod, tone)
 
     output = " ".join([ons + nuc + cod])

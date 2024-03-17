@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "./Header";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import {CopyLabel, VoLumeLabel} from "../components/Label";
+import { CopyLabel, VoLumeLabel } from "../components/Label";
 import LangButton from "../components/LangButton";
 import { translateTextToIpa, translateTextToSpeech } from "../services/translate.service";
 
@@ -20,6 +20,7 @@ export function Home() {
   const [langText, setLangTest] = useState("Bắc");
   const defautMaxHeight = 150;
   const [maxHeight, setMaxHeight] = useState(defautMaxHeight + "px");
+  const [playing, setPlaying] = useState(false);
 
   const handleChangeRowArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);
@@ -86,7 +87,7 @@ export function Home() {
               />
               <div>
                 <CopyToClipboard text={outputText}><CopyLabel /></CopyToClipboard>
-                <VoLumeLabel onClick={(e) => translateTextToSpeech(outputText, "ipa", "vi")}/>
+                <VoLumeLabel isPlaying={playing} onClick={(e) => translateTextToSpeech(outputText, "ipa", "vi", setPlaying)}/>
               </div>
             </div>
           </div>

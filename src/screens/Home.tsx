@@ -9,6 +9,7 @@ import {
 import north from "../images/north.jpg";
 import south from "../images/south.jpg";
 import { NORTH_VALUE, SOUTH_VALUE, DEFAUT_HEIGHT_TEXT } from "../constants";
+import './Home.css';
 
 interface Region {
   value: string;
@@ -63,20 +64,19 @@ export function Home() {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "top",
+        transition: 'background-image 0.5s ease',
       }}
     >
       <Header />
       <div id="body" className="mx-16 h-full">
         <div className="min-w flex items-center justify-center pt-24">
           <div id="left" className="min-h-full w-1/2 p-1">
-            <div
-              className={`"translate-c duration-300" mx-px my-1 flex w-[100px] cursor-pointer justify-center rounded-md bg-blue-100 p-2 text-center text-lg text-[#1967d2] underline-offset-1 transition-colors transition-colors duration-300 hover:bg-blue-200`}
-            >
+            <div className={`region-choose`}>
               <p>Tiếng Việt</p>
             </div>
             <div className="rounded-lg border bg-white p-3">
               <textarea
-                className="h-full w-full resize-none text-xl text-black focus:outline-none"
+                className="font-text h-full w-full resize-none text-xl text-black focus:outline-none"
                 value={inputText}
                 style={{ height: maxHeight }}
                 onChange={(e) => { handleChangeRowArea(e); }}
@@ -91,10 +91,7 @@ export function Home() {
             <div className="flex">
               {regions.map((region) => (
                 <div
-                  className={`mx-px my-1 flex w-[100px] cursor-pointer justify-center rounded-md p-2 text-center text-lg transition-colors duration-300 hover:bg-blue-200 ${langText === region.value
-                    ? "translate-c bg-blue-100 text-[#1967d2] underline-offset-1 transition-colors duration-300"
-                    : "bg-white text-gray-700"
-                    }`}
+                  className={`${langText === region.value ? "region-choose" : "region-not-choose"}`}
                   onClick={(e) => {
                     setLangTest(region.value);
                   }}
@@ -108,7 +105,7 @@ export function Home() {
               <textarea
                 readOnly={true}
                 style={{ height: maxHeight }}
-                className="h-full w-full resize-none bg-slate-100 text-xl text-black focus:outline-none"
+                className="font-text h-full w-full resize-none bg-slate-100 text-xl text-black focus:outline-none"
                 value={outputText}
                 placeholder="Bản dịch"
               />

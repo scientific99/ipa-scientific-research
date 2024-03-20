@@ -1,7 +1,7 @@
 FROM node:20 as builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --no-cache
+RUN npm install
 COPY . .
 RUN npm run build
 FROM nginx:alpine

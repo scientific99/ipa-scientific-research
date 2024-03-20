@@ -1,0 +1,25 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* .lang-vietnamese {
+  @apply mx-px my-1 flex w-[100px] cursor-pointer justify-center rounded-md bg-blue-100 p-2 text-center text-lg text-[#1967d2] underline-offset-1 transition-colors transition-colors duration-300 hover:bg-blue-200;
+} */
+
+.region-default {
+  @apply mx-px my-1 flex w-[100px] cursor-pointer justify-center rounded-md p-2 text-center text-lg transition-colors duration-300 hover:bg-blue-200;
+}
+
+.region-choose {
+  @apply region-default;
+  @apply bg-blue-100 text-[#1967d2] underline-offset-1 duration-300;
+}
+
+.region-not-choose {
+  @apply region-default;
+  @apply bg-white text-gray-700;
+}
+
+.font-text {
+  font-family: "Roboto", sans-serif;
+}

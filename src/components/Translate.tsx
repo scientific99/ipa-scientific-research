@@ -9,7 +9,7 @@ import {
 import north from "../images/north.jpg";
 import south from "../images/south.jpg";
 import { NORTH_VALUE, SOUTH_VALUE, DEFAUT_HEIGHT_TEXT } from "../constants";
-import './css/Home.css';
+import './css/Translate.css';
 
 interface Region {
   value: string;
@@ -69,8 +69,8 @@ export function Translate() {
     >
       <Header />
       <div id="body" className="mx-16 h-full">
-        <div className="min-w flex items-center justify-center pt-24">
-          <div id="left" className="min-h-full w-1/2 p-1">
+        <div className="main min-w items-center justify-center pt-24">
+          <div id="left" className="left p-1">
             <div className={`region-choose`}>
               <p>Tiếng Việt</p>
             </div>
@@ -87,7 +87,7 @@ export function Translate() {
             </div>
           </div>
 
-          <div id="right" className="w-1/2 p-1 text-black">
+          <div id="right" className="right p-1">
             <div className="flex">
               {regions.map((region) => (
                 <div

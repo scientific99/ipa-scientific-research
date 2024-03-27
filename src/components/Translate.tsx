@@ -9,6 +9,11 @@ import {
 import north from "../images/north.jpg";
 import south from "../images/south.jpg";
 import { NORTH_VALUE, SOUTH_VALUE, DEFAUT_HEIGHT_TEXT } from "../constants";
+import {
+  CSSTransition,
+  TransitionGroup,
+  SwitchTransition
+} from 'react-transition-group';
 import './css/Translate.css';
 
 interface Region {
@@ -27,7 +32,11 @@ export function Translate() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setOutputText("Đang dịch...")
+      if (inputText == "") {
+        setOutputText("");
+      } else {
+        setOutputText("Đang dịch...");
+      }
       handleTranslate(inputText, langText);
     }, 300);
     return () => clearTimeout(timeout);
@@ -58,25 +67,24 @@ export function Translate() {
   };
 
   return (
-    <div
-      className="overflow-y-scro h-screen w-screen justify-center"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "top",
-        transition: 'background-image 0.5s ease',
-      }}
-    >
-      <Header />
-      <div id="body" className="mx-16 h-full">
-        <div className="main min-w items-center justify-center pt-24">
+    <div className="relative h-screen w-full justify-center z-1">
+      {/* <div className="absolute inset-0`"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "top",
+          transition: 'background-image 0.5s ease'
+        }}
+      /> */}
+      <div id="body" className="relative w-full bg-while z-1">
+        <div className="main w-full items-center justify-center pt-24 p-10 bg-while">
           <div id="left" className="left p-1">
-            <div className={`region-choose`}>
-              <p>Tiếng Việt</p>
+            <div className="span-choose">
+              <span>Tiếng Việt</span>
             </div>
-            <div className="rounded-lg border bg-white p-3">
+            <div className="rounded-lg border-2 bg-white p-3">
               <textarea
-                className="font-text h-full w-full resize-none text-xl text-black focus:outline-none"
+                className="font-text w-full resize-none text-xl text-black focus:outline-none"
                 value={inputText}
                 style={{ height: maxHeight }}
                 onChange={(e) => { handleChangeRowArea(e); }}
@@ -91,21 +99,28 @@ export function Translate() {
             <div className="flex">
               {regions.map((region) => (
                 <div
-                  className={`${langText === region.value ? "region-choose" : "region-not-choose"}`}
+                  className={`${langText === region.value ? "span-choose" : "span-not-choose"}`}
                   onClick={(e) => {
                     setLangTest(region.value);
                   }}
                 >
                   <p>{region.value}</p>
+                  <CSSTransition
+                    key={langText}
+                    timeout={300}
+                    classNames="border-transition"
+                    unmountOnExit
+                  >
+                  </CSSTransition>
                 </div>
               ))}
             </div>
 
-            <div className="rounded-lg border bg-slate-100 p-3">
+            <div className="rounded-md border-2 bg-slate-100 p-3">
               <textarea
                 readOnly={true}
                 style={{ height: maxHeight }}
-                className="font-text h-full w-full resize-none bg-slate-100 text-xl text-black focus:outline-none"
+                className="font-text w-full resize-none bg-slate-100 text-xl text-black focus:outline-none"
                 value={outputText}
                 placeholder="Bản dịch"
               />

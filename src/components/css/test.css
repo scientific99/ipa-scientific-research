@@ -1,0 +1,17 @@
+.underline-enter {
+  border-bottom: 0 solid black;
+}
+
+.underline-enter-active {
+  border-bottom: 1px solid black;
+  transition: border-bottom 300ms;
+}
+
+.underline-exit {
+  border-bottom: 1px solid black;
+}
+
+.underline-exit-active {
+  border-bottom: 0 solid black;
+  transition: border-bottom 300ms;
+}

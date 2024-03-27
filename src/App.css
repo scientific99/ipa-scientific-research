@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  background-color: rgb(241, 241, 241); /* Màu nền mặc định cho toàn bộ dự án */
+}

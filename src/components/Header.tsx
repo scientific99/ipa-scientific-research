@@ -1,15 +1,17 @@
+import { Link } from "react-router-dom";
+
 function Header() {
   return (
-    <header className="ursor-pointer fixed left-0 right-0 top-0 z-10 flex items-center bg-gray px-4 py-4 text-gray-500">
-      <a href="./" className="ursor-pointer fixed left-0 right-0 top-0 z-10 flex items-center bg-gray px-4 py-4 text-white">
+    <div className="fixed w-screen bg-white px-8 py-3 z-10 top-0 left-0 right-0 border-b border-solid border-gray-300">
+      <Link to="/home" className="flex items-center justify-end">
+        {/* <h1 className="flex items-center text-lg text-[#1967d2] font-momo">Phiên âm</h1> */}
         <img
-          className="h-auto w-14"
+          className="h-9 w-auto"
           src={require("./../images/logo.png")}
           alt="logo"
-        ></img>
-        <h1 className="items-center p-0 text-xl">Dịch</h1>
-      </a>
-    </header>
+        />
+      </Link>
+    </div>
   );
 }
 

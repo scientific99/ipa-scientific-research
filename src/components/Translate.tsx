@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import Header from "./Header";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { CopyLabel, VoLumeLabel } from "./common/Label";
-import {
-  translateTextToIpa,
-  translateTextToSpeech,
-} from "../services/translate.service";
+import { ClearLabel, CopyLabel, VoLumeLabel } from "./common/icons/Label";
+import { TranslateTextToSpeech } from "./common/TextToSpeech"
+import { translateTextToIpa } from "../services/translate.service";
 import north from "../images/north.jpg";
 import south from "../images/south.jpg";
 import { NORTH_VALUE, SOUTH_VALUE, DEFAUT_HEIGHT_TEXT } from "../constants";
@@ -15,10 +12,17 @@ import {
   SwitchTransition
 } from 'react-transition-group';
 import './css/Translate.css';
+import Dictaphone from "./common/Dictaphone";
+import { MdClear } from "react-icons/md";
+import { useParams } from "react-router-dom";
 
 interface Region {
   value: string;
 }
+
+type TranslateProps = {
+  lang: string;
+};
 
 var regions: Region[] = [{ value: NORTH_VALUE }, { value: SOUTH_VALUE }];
 
@@ -32,7 +36,7 @@ export function Translate() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (inputText == "") {
+      if (inputText === "") {
         setOutputText("");
       } else {
         setOutputText("Đang dịch...");
@@ -67,73 +71,62 @@ export function Translate() {
   };
 
   return (
-    <div className="relative h-screen w-full justify-center z-1">
-      {/* <div className="absolute inset-0`"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "top",
-          transition: 'background-image 0.5s ease'
-        }}
-      /> */}
-      <div id="body" className="relative w-full bg-while z-1">
-        <div className="main w-full items-center justify-center pt-24 p-10 bg-while">
-          <div id="left" className="left p-1">
-            <div className="span-choose">
-              <span>Tiếng Việt</span>
-            </div>
-            <div className="rounded-lg border-2 bg-white p-3">
-              <textarea
-                className="font-text w-full resize-none text-xl text-black focus:outline-none"
-                value={inputText}
-                style={{ height: maxHeight }}
-                onChange={(e) => { handleChangeRowArea(e); }}
-              />
-              <CopyToClipboard text={inputText}>
-                <CopyLabel />
-              </CopyToClipboard>
-            </div>
+    <div id="body" className="relative w-full bg-while z-1">
+      <div className="main w-full items-center justify-center pt-12 p-10 bg-while">
+        <div id="left" className="left p-1">
+          <div className="span-choose">
+            <span>Tiếng Việt</span>
+          </div>
+          <div className="rounded-lg border-2 bg-white py-3 pl-3 pr-10 relative">
+            <ClearLabel
+              key="clear"
+              className="absolute justify-end z-0 right-1 top-1"
+              onClick={() => setInputText("")}
+              hidlen={inputText.length == 0}
+            />
+            <textarea
+              className="font-text w-full resize-none text-xl text-black focus:outline-none"
+              value={inputText}
+              style={{ height: maxHeight }}
+              onChange={(e) => { handleChangeRowArea(e); }}
+            />
+            <CopyLabel text={inputText} />
+            <Dictaphone text={inputText} setText={setInputText} />
+          </div>
+        </div>
+
+        <div id="right" className="right p-1">
+          <div className="flex">
+            {regions.map((region) => (
+              <div
+                key={region.value}
+                className={`${langText === region.value ? "span-choose" : "span-not-choose"}`}
+                onClick={() => {
+                  setLangTest(region.value);
+                }}
+              >
+                <p>{region.value}</p>
+                <CSSTransition
+                  key={langText}
+                  timeout={300}
+                  classNames="border-transition"
+                  unmountOnExit
+                >
+                </CSSTransition>
+              </div>
+            ))}
           </div>
 
-          <div id="right" className="right p-1">
-            <div className="flex">
-              {regions.map((region) => (
-                <div
-                  className={`${langText === region.value ? "span-choose" : "span-not-choose"}`}
-                  onClick={(e) => {
-                    setLangTest(region.value);
-                  }}
-                >
-                  <p>{region.value}</p>
-                  <CSSTransition
-                    key={langText}
-                    timeout={300}
-                    classNames="border-transition"
-                    unmountOnExit
-                  >
-                  </CSSTransition>
-                </div>
-              ))}
-            </div>
-
-            <div className="rounded-md border-2 bg-slate-100 p-3">
-              <textarea
-                readOnly={true}
-                style={{ height: maxHeight }}
-                className="font-text w-full resize-none bg-slate-100 text-xl text-black focus:outline-none"
-                value={outputText}
-                placeholder="Bản dịch"
-              />
-              <div>
-                <CopyToClipboard text={outputText}>
-                  <CopyLabel />
-                </CopyToClipboard>
-                <VoLumeLabel
-                  isPlaying={playing}
-                  onClick={(e) => translateTextToSpeech(outputText, "ipa", "vi", setPlaying)}
-                />
-              </div>
-            </div>
+          <div className="rounded-lg border-2 bg-slate-100 py-3 pl-3 pr-9 relative">
+            <textarea
+              readOnly={true}
+              style={{ height: maxHeight }}
+              className="font-text w-full resize-none bg-slate-100 text-xl text-black focus:outline-none"
+              value={outputText}
+              placeholder="Bản dịch"
+            />
+            <CopyLabel text={outputText} />
+            <TranslateTextToSpeech key={langText} text={outputText} lang={langText} />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { SetStateAction, useState } from "react";
 import Translate from "../components/Translate";
 import { Sidebar, Menu, MenuItem, sidebarClasses } from 'react-pro-sidebar';
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import Header from "../components/Header";
 import './css/Home.css'
 import { SwitchTransition, CSSTransition } from "react-transition-group";
@@ -15,13 +15,14 @@ interface MenuItemComponent {
     key: string,
     icon: React.JSX.Element,
     component: React.JSX.Element,
-    text: string
+    text: string,
+    prefix: string
 }
 const ListItems: MenuItemComponent[] = [
-    { key: "Translate", icon: <IoHomeSharp />, component: <Translate />, text: "Trang dịch" },
-    { key: "About", icon: <IoIdCard />, component: <About />, text: "Giới thiệu" },
-    { key: "Document", icon: <IoReceiptSharp />, component: <Document />, text: "Tài liệu chú thích" },
-    { key: "Feedback", icon: <IoAlbums />, component: <Feedback />, text: "Góp ý" }
+    { key: "Translate", icon: <IoHomeSharp />, component: <Translate />, text: "Trang dịch", prefix: "home" },
+    { key: "About", icon: <IoIdCard />, component: <About />, text: "Giới thiệu", prefix: "about" },
+    { key: "Document", icon: <IoReceiptSharp />, component: <Document />, text: "Tài liệu chú thích", prefix: "document" },
+    { key: "Feedback", icon: <IoAlbums />, component: <Feedback />, text: "Góp ý", prefix: "feedback" }
 ]
 
 const sidebarDefaultWidth = "220px"
@@ -32,7 +33,8 @@ export function Home() {
     const [selectedItem, setSelectedItem] = useState<MenuItemComponent | undefined>(ListItems[0]);
     const [sidebarWidth, setSidebarWidth] = useState(sidebarDefaultWidth)
     const handleItemClick = (itemKey: SetStateAction<string>) => {
-        setSelectedItem(ListItems.filter(item => item.key === itemKey).pop());
+        const itemChange = ListItems.filter(item => item.key === itemKey).pop()
+        setSelectedItem(itemChange);
     }
 
     const handleCollapsed = () => {
@@ -45,7 +47,6 @@ export function Home() {
         }
     }
     return <>
-        {/* <Header /> */}
         <div className="home-main">
             <div className="flex fixed h-screen z-20 left-0 top-0">
                 <Sidebar
@@ -123,7 +124,6 @@ export function Home() {
                     >
                         <div
                             className="page z-0 transition ease-in-out delay-1000"
-                        // style={{ transition: "padding 1s ease" }}
                         >
                             {selectedItem?.component}
                         </div>

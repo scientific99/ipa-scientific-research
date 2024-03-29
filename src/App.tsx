@@ -4,8 +4,8 @@ import "./App.css";
 import Home from "./screens/Home";
 import Translate from "./components/Translate";
 import Header from "./components/Header";
-import Test from "./components/Test";
-// import About from "./screens/About"
+import Document from "./components/Document";
+import About from "./components/About";
 
 function App() {
   return (
@@ -13,9 +13,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/header" element={<Header />} />
+        <Route path="/document" element={<Document />} />
+        <Route path="/about" element={<About />} />
         <Route path="/translate" element={<Translate />} />
-        <Route path="/test" element={<Test />} />
       </Routes>
     </Router>
   );

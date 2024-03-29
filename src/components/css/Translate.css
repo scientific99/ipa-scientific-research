@@ -32,21 +32,6 @@
   }
 }
 
-.region-default {
-  @apply mx-px my-1 flex w-[100px] cursor-pointer justify-center rounded-md p-2 text-center text-lg transition-colors duration-300 hover:bg-blue-200;
-  font-family: "Roboto,sans-serif";
-}
-
-.region-choose {
-  @apply region-default;
-  @apply bg-blue-100 text-[#1967d2] underline-offset-1 duration-300;
-}
-
-.region-not-choose {
-  @apply region-default;
-  @apply bg-white text-gray-700;
-}
-
 .font-text {
   font-family: "Roboto,sans-serif";
   /* font-family: "Source Sance Pro", sans-serif; */
@@ -58,9 +43,9 @@
   font-weight: 500;
   font-family: "Roboto,sans-serif";
   border-bottom: 3px solid #15497d;
+  font-size: 20px;
   transition:
-    color 0.3s ease,
-    border-bottom 0.3s ease;
+    /* color 1s ease, */ border-bottom 0.3s linear;
 }
 
 .span-choose::before {
@@ -79,6 +64,8 @@
 
 .span-not-choose {
   @apply mx-2 inline-block cursor-pointer px-1 py-2 text-lg;
+
+  font-size: 20px;
   font-family: "Roboto,sans-serif";
   color: rgb(108, 108, 108) !important;
 }

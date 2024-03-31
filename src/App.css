@@ -40,3 +40,10 @@
 body {
   background-color: rgb(241, 241, 241); /* Màu nền mặc định cho toàn bộ dự án */
 }
+
+.home-main {
+  display: flex;
+  margin-top: 60px;
+  /* background-color: rgb(241, 241, 241); */
+  /* background-color: rgba(79, 104, 125, 0.4); */
+}

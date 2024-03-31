@@ -71,7 +71,7 @@ export function Translate() {
   };
 
   return (
-    <div id="body" className="relative w-full bg-while z-1">
+    <div id="body" className="relative w-full bg-while z-1 mx-auto">
       <div className="main w-full items-center justify-center pt-12 p-10 bg-while">
         <div id="left" className="left p-1">
           <div className="span-choose">

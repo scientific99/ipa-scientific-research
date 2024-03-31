@@ -23,10 +23,10 @@ const rows = [
 
 export function Document() {
     return (
-        <div className="font-document mt-2 flex flex-col p-10">
+        <div className="font-document m-5 mt-10 flex flex-col p-10 bg-white mx-auto">
             <table className="min-w-full divide-y divide-gray-200">
                 <caption className="caption-top">
-                    Table 3.1: Professional wrestlers and their signature moves.
+                    Bảng quy đổi kí hiệu thanh điệu
                 </caption>
                 <thead className="border-separate border-spacing-2 bg-gray-50 cursor-pointer">
                     <tr>

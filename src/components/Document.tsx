@@ -23,10 +23,10 @@ const rows = [
 
 export function Document() {
     return (
-        <div className="font-document m-5 mt-10 flex flex-col p-10 bg-white mx-auto">
+        <div className="font-document m-5 mt-10 flex flex-col p-10 bg-white mx-auto shadow-lg rounded">
             <table className="min-w-full divide-y divide-gray-200">
-                <caption className="caption-top">
-                    Bảng quy đổi kí hiệu thanh điệu
+                <caption className="caption-top pb-5 text-xl">
+                    BẢNG QUY ĐỔI KÍ HIỆU THANH ĐIỆU
                 </caption>
                 <thead className="border-separate border-spacing-2 bg-gray-50 cursor-pointer">
                     <tr>

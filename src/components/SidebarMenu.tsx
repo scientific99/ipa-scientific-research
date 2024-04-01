@@ -7,7 +7,9 @@ interface SidebarProp {
     collapsed?: boolean,
     handleCollapsed?: any,
     sidebarWidth: any,
-    setSidebarWidth: any
+    setSidebarWidth: any,
+    activeKey: any,
+    setActiveKey: any
 }
 interface MenuItemComponent {
     key: string,
@@ -30,7 +32,9 @@ const SidebarMenu = ({
     collapsed,
     handleCollapsed,
     sidebarWidth,
-    setSidebarWidth
+    setSidebarWidth,
+    activeKey,
+    setActiveKey,
 }: SidebarProp) => {
 
     useEffect(() => {
@@ -124,7 +128,8 @@ const SidebarMenu = ({
                             <Link to={item.prefix}>
                                 <MenuItem
                                     className="menu-item"
-                                    // active={selectedItem?.key === item.key}
+                                    active={item.prefix === activeKey}
+                                    onClick={() => { setActiveKey(item.prefix); }}
                                     key={item.key}
                                     icon={item.icon}
                                 >

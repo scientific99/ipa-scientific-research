@@ -77,7 +77,7 @@ export function Translate() {
           <div className="span-choose">
             <span>Tiếng Việt</span>
           </div>
-          <div className="rounded-lg border-2 bg-white py-3 pl-3 pr-10 relative">
+          <div className="shadow-lg rounded rounded-lg border bg-white py-3 pl-3 pr-10 relative">
             <ClearLabel
               key="clear"
               className="absolute justify-end z-0 right-1 top-1"
@@ -91,7 +91,7 @@ export function Translate() {
               onChange={(e) => { handleChangeRowArea(e); }}
             />
             <CopyLabel text={inputText} />
-            <Dictaphone text={inputText} setText={setInputText} />
+            {/* <Dictaphone text={inputText} setText={setInputText} /> */}
           </div>
         </div>
 
@@ -117,7 +117,7 @@ export function Translate() {
             ))}
           </div>
 
-          <div className="rounded-lg border-2 bg-slate-100 py-3 pl-3 pr-9 relative">
+          <div className="shadow-lg rounded rounded-lg border bg-slate-100 py-3 pl-3 pr-9 relative">
             <textarea
               readOnly={true}
               style={{ height: maxHeight }}

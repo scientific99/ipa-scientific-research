@@ -17,6 +17,8 @@ const sidebarCollapsedWidth = "80px"
 const App: FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(sidebarDefaultWidth);
+  const [activeKey, setActiveKey] = useState("/home")
+
   const handleCollapsed = () => {
     setCollapsed(!collapsed);
   }
@@ -31,6 +33,8 @@ const App: FC = () => {
           handleCollapsed={handleCollapsed}
           sidebarWidth={sidebarWidth}
           setSidebarWidth={setSidebarWidth}
+          activeKey={activeKey}
+          setActiveKey={setActiveKey}
         />
         <div
           className="flex w-screen h-full relative justify-c"

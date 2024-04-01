@@ -14,8 +14,8 @@ const sidebarDefaultWidth = "270px"
 const sidebarCollapsedWidth = "80px"
 
 const App: FC = () => {
-  const [toggled, setToggled] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [toggled, setToggled] = useState(window.innerWidth <= 767);
+  const [collapsed, setCollapsed] = useState(window.innerWidth <= 767);
   const [sidebarWidth, setSidebarWidth] = useState(sidebarDefaultWidth);
   const [activeKey, setActiveKey] = useState("/home")
 

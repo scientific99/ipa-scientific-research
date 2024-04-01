@@ -31,7 +31,7 @@ export function Translate() {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [langText, setLangTest] = useState(NORTH_VALUE);
-  const [maxScreenHeight, setMaxScreenHeight] = useState(DEFAUT_HEIGHT_TEXT);
+  const [maxScreenHeight, setMaxScreenHeight] = useState(window.innerHeight <= 767 ? DEFAUT_HEIGHT_TEXT / 2 : DEFAUT_HEIGHT_TEXT);
   const [maxHeight, setMaxHeight] = useState(maxScreenHeight + "px");
   const [playing, setPlaying] = useState(false);
 

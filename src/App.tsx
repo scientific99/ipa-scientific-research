@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import React, { FC, useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { SwitchTransition, CSSTransition, TransitionGroup } from "react-transition-group";
 import "./App.css";
 import Home from "./screens/Home";
@@ -9,12 +9,12 @@ import Document from "./components/Document";
 import Feedback from "./components/Feedback"
 import About from "./components/About";
 import SidebarMenu from "./components/SidebarMenu";
-import "./fade.css"
-
+import { PageTransition } from "@steveeeie/react-page-transition";
 const sidebarDefaultWidth = "270px"
 const sidebarCollapsedWidth = "80px"
 
 const App: FC = () => {
+  const [toggled, setToggled] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(sidebarDefaultWidth);
   const [activeKey, setActiveKey] = useState("/home")
@@ -22,8 +22,26 @@ const App: FC = () => {
   const handleCollapsed = () => {
     setCollapsed(!collapsed);
   }
-  // const location = useLocation();
-  const locationKey = window.location.pathname;
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 767) {
+        setToggled(true);
+        setCollapsed(true);
+      } else {
+        setToggled(false);
+        setCollapsed(false);
+      }
+    };
+
+    // Gắn sự kiện lắng nghe sự thay đổi kích thước cửa sổ
+    window.addEventListener('resize', handleResize);
+
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <Router>
@@ -35,13 +53,16 @@ const App: FC = () => {
           setSidebarWidth={setSidebarWidth}
           activeKey={activeKey}
           setActiveKey={setActiveKey}
+          toggled={toggled}
+          setToggled={setToggled}
         />
         <div
-          className="flex w-screen h-full relative justify-c"
-          style={{ marginLeft: sidebarWidth }}
+          className="flex w-full h-full relative justify-c mx-auto"
+          style={toggled ? { marginLeft: sidebarCollapsedWidth } : { marginLeft: sidebarWidth }}
         >
           <Header />
           <Routes>
+            <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/document" element={<Document />} />

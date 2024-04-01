@@ -31,7 +31,8 @@ export function Translate() {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [langText, setLangTest] = useState(NORTH_VALUE);
-  const [maxHeight, setMaxHeight] = useState(DEFAUT_HEIGHT_TEXT + "px");
+  const [maxScreenHeight, setMaxScreenHeight] = useState(DEFAUT_HEIGHT_TEXT);
+  const [maxHeight, setMaxHeight] = useState(maxScreenHeight + "px");
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
@@ -55,8 +56,8 @@ export function Translate() {
     e.target.style.height = "auto";
     e.target.style.height =
       Math.min(
-        Math.max(DEFAUT_HEIGHT_TEXT, e.target.scrollHeight + 7),
-        DEFAUT_HEIGHT_TEXT * 2,
+        Math.max(maxScreenHeight, e.target.scrollHeight + 7),
+        maxScreenHeight * 2,
       ) + "px";
     setMaxHeight(e.target.style.height);
   };
@@ -69,6 +70,26 @@ export function Translate() {
       console.error("Error while translating:", error);
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerHeight <= 767) {
+        setMaxScreenHeight(DEFAUT_HEIGHT_TEXT / 2);
+        setMaxHeight(DEFAUT_HEIGHT_TEXT / 2 + "px");
+      } else {
+        setMaxScreenHeight(DEFAUT_HEIGHT_TEXT);
+        setMaxHeight(DEFAUT_HEIGHT_TEXT + "px");
+      }
+    };
+
+    // Gắn sự kiện lắng nghe sự thay đổi kích thước cửa sổ
+    window.addEventListener('resize', handleResize);
+
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <div id="body" className="relative w-full bg-while z-1 mx-auto">

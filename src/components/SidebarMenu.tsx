@@ -9,7 +9,9 @@ interface SidebarProp {
     sidebarWidth: any,
     setSidebarWidth: any,
     activeKey: any,
-    setActiveKey: any
+    setActiveKey: any,
+    toggled: any,
+    setToggled: any
 }
 interface MenuItemComponent {
     key: string,
@@ -35,6 +37,8 @@ const SidebarMenu = ({
     setSidebarWidth,
     activeKey,
     setActiveKey,
+    toggled,
+    setToggled
 }: SidebarProp) => {
 
     useEffect(() => {
@@ -45,11 +49,20 @@ const SidebarMenu = ({
         }
     }, [collapsed])
 
+    const handleOnClickItem = (prefix: any) => {
+        setActiveKey(prefix);
+        if ((window.innerWidth <= 767) && (collapsed === false)) {
+            handleCollapsed()
+        }
+
+    }
+
     return (
         <div className="home-main">
             <div className="flex fixed h-screen z-20 left-0 top-0">
                 <Sidebar
                     collapsed={collapsed}
+                    toggled={false}
                     collapsedWidth={sidebarCollapsedWidth}
                     width={sidebarWidth}
                     transitionDuration={500}
@@ -129,7 +142,7 @@ const SidebarMenu = ({
                                 <MenuItem
                                     className="menu-item"
                                     active={item.prefix === activeKey}
-                                    onClick={() => { setActiveKey(item.prefix); }}
+                                    onClick={() => { handleOnClickItem(item.prefix) }}
                                     key={item.key}
                                     icon={item.icon}
                                 >

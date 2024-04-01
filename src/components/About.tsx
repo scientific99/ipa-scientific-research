@@ -8,8 +8,8 @@ export function About() {
                     Chúng tôi cũng xin chân thành cảm ơn James Kirby - tác giả của chương trình vPhon đã cung cấp tài nguyên kí âm IPA tiếng Việt để chúng tôi kế thừa và phát triển, từ đó, xây dựng thành công website Phiên âm tiếng Việt theo hệ IPA.
                     Cảm ơn sinh viên Đinh Bá Hải, trường Công nghệ Thông tin và Truyền Thông, Đại học Bách Khoa Hà Nội đã hỗ trợ nhóm nghiên cứu về mặt kỹ thuật để xây dựng thành công website Phiên âm tiếng Việt theo hệ IPA.
                     Ngoài ra, xin cảm ơn các tác giả, trung tâm thư viện trường Đại học Sư phạm Hà Nội, gia đình, bạn bè đã giúp đỡ, động viên chúng tôi trong quá trình thực hiện nghiên cứu.
-                    Hà Nội, ngày 31, tháng 3, năm 2024
                 </p>
+                <p className="text-lg text-gray-700 px-4 my-auto">Hà Nội, ngày 31, tháng 3, năm 2024</p>
                 <p className="text-lg text-gray-700 text-right px-8 p-2">Nhóm tác giả</p>
             </div>
 

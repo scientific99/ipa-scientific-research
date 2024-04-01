@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SuccessMessage from "./common/SuccessMessage";
 import { Link } from "react-router-dom";
+import { send_feedback } from "../services/feedback.service"
 
 interface MenuItemComponent {
     fullName?: string,
@@ -12,9 +13,10 @@ export function Feedback() {
     const [formInput, setFormInput] = useState<MenuItemComponent>({});
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSendButton = () => {
+    const handleSendButton = async () => {
         setFormInput({});
         setSubmitted(true);
+        var output = await send_feedback(formInput.fullName, formInput.jobTitle, formInput.description);
         console.log(formInput);
     };
     const handleChangeForm = (e: any) => {

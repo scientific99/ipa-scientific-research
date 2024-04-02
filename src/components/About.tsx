@@ -18,7 +18,7 @@ export function About() {
                 </p>
                 <div className="overflow-ellipsis self-center py-4 text-right">
                     <p className="text-lg text-gray-700 px-4">Hà Nội, ngày 31, tháng 3, năm 2024</p>
-                    <p className="text-lg text-gray-700 px-8 p-2 px-20" style={{ whiteSpace: "pre-wrap" }}>Nhóm tác giả</p>
+                    <p className="text-lg text-gray-700 px-8 p-2 px-20" style={{ whiteSpace: "pre-wrap", paddingRight: "75px" }}>Nhóm tác giả</p>
                     <p className="text-lg text-gray-700 px-8 p-2" style={{ paddingRight: "50px" }}>Lê Nguyễn Diệu Anh</p>
                 </div>
             </div>

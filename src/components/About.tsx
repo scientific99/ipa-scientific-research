@@ -16,9 +16,12 @@ export function About() {
                 <p className={cssParagraph} style={{ whiteSpace: "pre-wrap" }}>
                     Ngoài ra, xin cảm ơn các tác giả, Trung tâm Thông tin - Thư viện trường Đại học Sư phạm Hà Nội, gia đình, bạn bè đã giúp đỡ, động viên chúng tôi trong quá trình thực hiện nghiên cứu.
                 </p>
+                <p className={cssParagraph} style={{ whiteSpace: "pre-wrap" }}>
+                    Mọi sai sót còn lại của báo cáo thuộc về trách nhiệm của nhóm nghiên cứu.
+                </p>
                 <div className="overflow-ellipsis self-center py-4 text-right">
                     <p className="text-lg text-gray-700 px-4">Hà Nội, ngày 31, tháng 3, năm 2024</p>
-                    <p className="text-lg text-gray-700 px-8 p-2 px-20" style={{ whiteSpace: "pre-wrap", paddingRight: "75px" }}>Nhóm tác giả</p>
+                    <p className="text-lg text-gray-700 px-8 p-2 px-20" style={{ whiteSpace: "pre-wrap", paddingRight: "50px" }}>Thay mặt nhóm tác giả</p>
                     <p className="text-lg text-gray-700 px-8 p-2" style={{ paddingRight: "50px" }}>Lê Nguyễn Diệu Anh</p>
                 </div>
             </div>

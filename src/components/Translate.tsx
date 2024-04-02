@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { ClearLabel, CopyLabel } from "./common/icons/Label";
 import { TranslateTextToSpeech } from "./common/TextToSpeech"
 import { translateTextToIpa } from "../services/translate.service";
-import north from "../images/north.jpg";
-import south from "../images/south.jpg";
 import { NORTH_VALUE, SOUTH_VALUE, DEFAUT_HEIGHT_TEXT } from "../constants";
 import {
   CSSTransition
@@ -21,7 +19,6 @@ type TranslateProps = {
 var regions: Region[] = [{ value: NORTH_VALUE }, { value: SOUTH_VALUE }];
 
 export function Translate() {
-  const [backgroundImage, setBackgroundImage] = useState(north);
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
   const [langText, setLangTest] = useState(NORTH_VALUE);
@@ -41,9 +38,6 @@ export function Translate() {
     return () => clearTimeout(timeout);
   }, [inputText, langText]);
 
-  useEffect(() => {
-    langText === SOUTH_VALUE ? setBackgroundImage(south) : setBackgroundImage(north)
-  }, [langText])
   const handleChangeRowArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);
 

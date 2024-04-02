@@ -1,20 +1,14 @@
 import { useState, useEffect } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { ClearLabel, CopyLabel, VoLumeLabel } from "./common/icons/Label";
+import { ClearLabel, CopyLabel } from "./common/icons/Label";
 import { TranslateTextToSpeech } from "./common/TextToSpeech"
 import { translateTextToIpa } from "../services/translate.service";
 import north from "../images/north.jpg";
 import south from "../images/south.jpg";
 import { NORTH_VALUE, SOUTH_VALUE, DEFAUT_HEIGHT_TEXT } from "../constants";
 import {
-  CSSTransition,
-  TransitionGroup,
-  SwitchTransition
+  CSSTransition
 } from 'react-transition-group';
 import './css/Translate.css';
-import Dictaphone from "./common/Dictaphone";
-import { MdClear } from "react-icons/md";
-import { useParams } from "react-router-dom";
 
 interface Region {
   value: string;

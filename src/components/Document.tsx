@@ -32,7 +32,7 @@ const rows: Row[] = [
 
 export function Document() {
     return (
-        <div className="font-document m-5 mt-10 flex flex-col p-10 bg-white mx-auto shadow-lg rounded">
+        <div className="max-w-4xl font-document m-5 mt-10 flex flex-col p-10 bg-white mx-auto shadow-lg rounded">
             <table className="min-w-full divide-y divide-gray-200">
                 <caption className="caption-top pb-5 text-xl">
                     BẢNG QUY ĐỔI KÍ HIỆU THANH ĐIỆU
@@ -57,7 +57,7 @@ export function Document() {
             <span className="my-5 italic">
                 (*) Theo thang 5 bậc cao độ của Triệu Nguyên Nhiệm, với 1 là thấp nhất và 5 là cao nhất. (Chao, Yuen-Ren. "A system of tone letters." Le maître phonétique (1930).
             </span>
-            <img src={require("./../images/vovel.png")} alt="vovel" className="w-1/2 justify-center	items-center mx-auto" />
+            <img src={require("./../images/vovel.png")} alt="vovel" className="w-2/3 justify-center	items-center mx-auto" />
             <div className="italic">Nguồn: Tạ Thành Tấn</div>
         </div >
     );

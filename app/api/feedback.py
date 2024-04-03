@@ -1,11 +1,14 @@
 import io
 
 from flask import jsonify, request, send_file
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
 from . import api
 from app.errors.error import InvalidApiUsage
 import json
 
-from app.service.feeback.send_feedback_ggsheet import send_feedback_ggsheet
+from app.service.feeback.feedback_googlesheet import send_feedback_ggsheet,get_feedback_googlesheet
+
 
 
 @api.route("/feedback/send", methods=["POST"])
@@ -21,3 +24,10 @@ def send_google_sheet():
         return response
     # except:
     #     return jsonify({})
+
+@api.route("/feedback/get", methods=["GET"])
+@jwt_required()
+def get_feedback():
+    current_user = get_jwt_identity()
+    data = get_feedback_googlesheet()
+    return jsonify(data=data, logged_in_as=current_user), 200

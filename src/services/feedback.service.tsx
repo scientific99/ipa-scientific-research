@@ -24,3 +24,24 @@ export const send_feedback = (
             }
         });
 };
+
+export const getListFeedback = () => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+        throw new Error("Token not found in localStorage");
+    }
+
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    axios.defaults.headers.common["Content-Type"] = "application/json";
+
+    return axios
+        .get(`${API_BASE_URL}/feedback/get`)
+        .then((response) => {
+            if (response && response.data) {
+                return response.data.data;
+            } else {
+                console.log(response)
+                throw new Error("Invalid response from server");
+            }
+        });
+};

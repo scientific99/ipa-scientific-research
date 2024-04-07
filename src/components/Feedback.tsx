@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SuccessMessage from "./common/SuccessMessage";
 import { Link } from "react-router-dom";
-import { send_feedback } from "../services/feedback.service"
+import { useNavigate } from 'react-router-dom';
+import { getListFeedback, send_feedback } from "../services/feedback.service"
+import { useAuth } from "./auth/AuthContext";
 
 interface MenuItemComponent {
     fullName?: string,
@@ -16,7 +18,11 @@ export function Feedback() {
     const handleSendButton = async () => {
         setFormInput({});
         setSubmitted(true);
-        var output = await send_feedback(formInput.fullName, formInput.jobTitle, formInput.description);
+        try {
+            var output = await send_feedback(formInput.fullName, formInput.jobTitle, formInput.description);
+        } catch {
+
+        }
         console.log(formInput);
     };
     const handleChangeForm = (e: any) => {
@@ -94,4 +100,62 @@ export function Feedback() {
 
     );
 };
+
+export function FeedbackTable() {
+    const { isLogin, prefix, setPrefix } = useAuth();
+    const navigate = useNavigate();
+    const cols = [
+        { field: "create_time", use: "Thời gian tạo", text: "text-left" },
+        { field: "full_name", use: "Người góp ý", text: "text-center" },
+        { field: "job_title", use: "Nghề nghiệp", text: "text-left" },
+        { field: "description", use: "Nội dung góp ý", text: "text-left" },
+    ]
+
+    const [rows, setRows] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const feedbackRows = await getListFeedback();
+                setRows(feedbackRows);
+            } catch (error) {
+                setPrefix("/admin/login");
+                navigate('/admin/login');
+            }
+        }
+        fetchData();
+    }, [setPrefix]);
+
+    return (
+        <div className="max-w-4xl font-document m-5 mt-10 flex flex-col p-10 bg-white mx-auto shadow-lg rounded">
+            <table className="min-w-full divide-y divide-gray-200">
+                <caption className="caption-top pb-5 text-xl">
+                    DANH SÁCH GÓP Ý
+                </caption>
+                <thead className="border-separate border-spacing-2 bg-gray-50 cursor-pointer">
+                    <tr>
+                        {cols.map((col) => (
+                            <th className="border border-slate-300 p-2">{col.use}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows.map((row) => (
+                        <tr className="border border-slate-300">
+                            {cols.map((col) => (
+                                <td className={"border border-slate-300 p-2 " + col.text}> {row[col.field]}</td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <Link
+                className="mt-5 text-right text-blue-600 w-max ml-auto"
+                to="https://docs.google.com/spreadsheets/d/1-h0H5Ou7hwPADb_84xsK4F3XqTiyejTtoRDMaOmfjZg/edit#gid=0"
+            >
+                Link google sheet
+            </Link>
+        </div >
+    );
+}
+
 export default Feedback;

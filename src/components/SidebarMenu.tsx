@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { IoAlbums, IoHomeSharp, IoIdCard, IoMenuSharp, IoReceiptSharp } from 'react-icons/io5';
+import { IoAlbums, IoHomeSharp, IoIdCard, IoMenuSharp, IoReceiptSharp, IoPersonAddSharp, IoLibraryOutline } from 'react-icons/io5';
 import { Sidebar, Menu, MenuItem, sidebarClasses } from 'react-pro-sidebar';
+import { useAuth } from "../components/auth/AuthContext"
 import { Link } from 'react-router-dom';
 
 interface SidebarProp {
@@ -11,21 +12,28 @@ interface SidebarProp {
     activeKey: any,
     setActiveKey: any,
     toggled: any,
-    setToggled: any
+    setToggled: any,
 }
 interface MenuItemComponent {
     key: string,
     icon: React.JSX.Element,
     text: string,
     prefix: string,
+    type: string,
 }
-const ListItems: MenuItemComponent[] = [
-    { key: "Translate", icon: <IoHomeSharp />, text: "Trang dịch", prefix: "/home" },
-    { key: "About", icon: <IoIdCard />, text: "Giới thiệu", prefix: "/about" },
-    { key: "Document", icon: <IoReceiptSharp />, text: "Tài liệu chú thích", prefix: "/document" },
-    { key: "Feedback", icon: <IoAlbums />, text: "Góp ý", prefix: "/feedback" }
+const ListPrefix: MenuItemComponent[] = [
+    { key: "Translate", icon: <IoHomeSharp />, text: "Trang dịch", prefix: "/home", type: "item" },
+    { key: "About", icon: <IoIdCard />, text: "Giới thiệu", prefix: "/about", type: "item" },
+    { key: "Document", icon: <IoReceiptSharp />, text: "Tài liệu chú thích", prefix: "/document", type: "item" },
+    { key: "Feedback", icon: <IoAlbums />, text: "Góp ý", prefix: "/feedback", type: "item" },
+    { key: "FeedbackTable", icon: <IoLibraryOutline />, text: "Danh sách góp ý", prefix: "/feedback/list", type: "item" },
+    { key: "login", icon: <IoPersonAddSharp />, text: "Đăng nhập", prefix: "/admin/login", type: "footer" },
+    { key: "logout", icon: <IoPersonAddSharp />, text: "Đăng xuất", prefix: "/admin/login", type: "footer" }
 ]
 
+
+const loginPrefix: MenuItemComponent = { key: "login", icon: <IoPersonAddSharp />, text: "Đăng nhập", prefix: "/admin/login", type: "footer" }
+const logoutPrefix: MenuItemComponent = { key: "logout", icon: <IoPersonAddSharp />, text: "Đăng xuất", prefix: "/admin/login", type: "footer" }
 
 const sidebarDefaultWidth = "270px"
 const sidebarCollapsedWidth = "80px"
@@ -38,8 +46,19 @@ const SidebarMenu = ({
     activeKey,
     setActiveKey,
     toggled,
-    setToggled
+    setToggled,
 }: SidebarProp) => {
+    const ListItems = ListPrefix.filter((item) => { return item.type === "item" });
+    const { isLogin, prefix, setPrefix } = useAuth();
+    const [loginKey, setLoginKey] = useState(isLogin ? logoutPrefix : loginPrefix);
+
+    useEffect(() => {
+        setLoginKey(isLogin ? logoutPrefix : loginPrefix)
+    }, [isLogin])
+
+    useEffect(() => {
+        setActiveKey(prefix);
+    }, [prefix])
 
     useEffect(() => {
         if (collapsed) {
@@ -49,12 +68,11 @@ const SidebarMenu = ({
         }
     }, [collapsed])
 
-    const handleOnClickItem = (prefix: any) => {
-        setActiveKey(prefix);
+    const handleOnClickItem = (prefixActive: any) => {
+        setPrefix(prefixActive);
         if ((window.innerWidth <= 767) && (collapsed === false)) {
             handleCollapsed()
         }
-
     }
 
     return (
@@ -150,9 +168,38 @@ const SidebarMenu = ({
                                 </MenuItem>
                             </Link>
                         ))}
-
                     </Menu>
+                    <div className='absolute w-full bottom-10'>
+                        <Menu
+                            menuItemStyles={{
+                                button: ({ level, active, disabled }) => {
+                                    if (level === 0)
+                                        return {
+                                            color: disabled ? '#606061' : '#a7bbcf',
+                                            menuContent: '#082440',
+                                            backgroundColor: active ? '#00458b' : undefined,
+                                            "&:hover": {
+                                                backgroundColor: "#0b2948 !important",
+                                                color: "white !important"
+                                            }
+                                        };
+                                },
+                            }}
 
+                        >
+                            {/* <Link to={loginKey.prefix}>
+                                <MenuItem
+                                    className="menu-item"
+                                    active={loginKey.prefix === activeKey}
+                                    onClick={() => { handleOnClickItem(loginKey.prefix) }}
+                                    key={loginKey.key}
+                                    icon={loginKey.icon}
+                                >
+                                    {loginKey.text}
+                                </MenuItem>
+                            </Link> */}
+                        </Menu>
+                    </div>
                 </Sidebar>
             </div>
 

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Table } from "react-bootstrap";
-import { SwitchTransition, CSSTransition } from "react-transition-group";
 import "./css/Document.css";
 
 interface colSchema {

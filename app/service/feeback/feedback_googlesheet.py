@@ -38,7 +38,7 @@ def get_feedback_googlesheet():
     json_data = []
     for row in rows:
         json_data.append({
-            "create_time": row[0],
+            "create_time": row[0][:20],
             "full_name": row[1],
             "job_title": row[2],
             "description": row[3]

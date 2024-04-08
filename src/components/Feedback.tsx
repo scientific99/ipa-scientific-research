@@ -126,35 +126,39 @@ export function FeedbackTable() {
     }, [setPrefix]);
 
     return (
-        <div className="max-w-4xl font-document m-5 mt-10 flex flex-col p-10 bg-white mx-auto shadow-lg rounded">
-            <table className="min-w-full divide-y divide-gray-200">
-                <caption className="caption-top pb-5 text-xl">
-                    DANH SÁCH GÓP Ý
-                </caption>
-                <thead className="border-separate border-spacing-2 bg-gray-50 cursor-pointer">
-                    <tr>
-                        {cols.map((col) => (
-                            <th className="border border-slate-300 p-2">{col.use}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows.map((row) => (
-                        <tr className="border border-slate-300">
-                            {cols.map((col) => (
-                                <td className={"border border-slate-300 p-2 " + col.text}> {row[col.field]}</td>
+        isLogin ? (
+            (
+                <div className="max-w-4xl font-document m-5 mt-10 flex flex-col p-10 bg-white mx-auto shadow-lg rounded">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <caption className="caption-top pb-5 text-xl">
+                            DANH SÁCH GÓP Ý
+                        </caption>
+                        <thead className="border-separate border-spacing-2 bg-gray-50 cursor-pointer">
+                            <tr>
+                                {cols.map((col) => (
+                                    <th className="border border-slate-300 p-2">{col.use}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows.map((row) => (
+                                <tr className="border border-slate-300">
+                                    {cols.map((col) => (
+                                        <td className={"border border-slate-300 p-2 " + col.text}> {row[col.field]}</td>
+                                    ))}
+                                </tr>
                             ))}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <Link
-                className="mt-5 text-right text-blue-600 w-max ml-auto"
-                to="https://docs.google.com/spreadsheets/d/1-h0H5Ou7hwPADb_84xsK4F3XqTiyejTtoRDMaOmfjZg/edit#gid=0"
-            >
-                Link google sheet
-            </Link>
-        </div >
+                        </tbody>
+                    </table>
+                    <Link
+                        className="mt-5 text-right text-blue-600 w-max ml-auto"
+                        to="https://docs.google.com/spreadsheets/d/1-h0H5Ou7hwPADb_84xsK4F3XqTiyejTtoRDMaOmfjZg/edit#gid=0"
+                    >
+                        Link google sheet
+                    </Link>
+                </div >
+            )
+        ) : <div></div>
     );
 }
 

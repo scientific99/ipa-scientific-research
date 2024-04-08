@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { getListFeedback, send_feedback } from "../services/feedback.service"
 import { useAuth } from "./auth/AuthContext";
+import Login from "./auth/Login";
 
 interface MenuItemComponent {
     fullName?: string,
@@ -158,7 +159,7 @@ export function FeedbackTable() {
                     </Link>
                 </div >
             )
-        ) : <div></div>
+        ) : <Login />
     );
 }
 

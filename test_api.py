@@ -42,3 +42,4 @@
 # from app.service.feeback.send_feedback_ggsheet import send_feedback_ggsheet
 
 # send_feedback_ggsheet("Đinh Bá Hải", "DE", "A")
+print("anhnhoemnhieulam"[::-1])

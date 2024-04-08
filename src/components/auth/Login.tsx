@@ -10,6 +10,7 @@ interface LoginFormState {
 }
 const Login = () => {
     const [form, setForm] = useState<LoginFormState>({ username: "", password: "" });
+    const [isWrongPassword, setWrongPassword] = useState(false);
     const navigate = useNavigate();
     const { isLogin, setIsLogin, setPrefix } = useAuth();
 
@@ -26,9 +27,9 @@ const Login = () => {
         try {
             const check = await sendLoginAdmin(form.username, form.password);
             setIsLogin(true);
-            navigate("/feedback/list")
+            navigate("/feedback/list");
         } catch {
-            const check = false;
+            setWrongPassword(true);
         }
 
     };
@@ -88,6 +89,8 @@ const Login = () => {
                             className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
+                    {isWrongPassword === true && (<div className='mt-2 text-red-600 text-sm'>Tài khoản hoặc mật khẩu không đúng</div>)}
+
                 </div>
 
                 <div>
@@ -112,7 +115,9 @@ const Login = () => {
 
     const loginDone = <FeedbackTable />
 
-    return Form
+    return <>
+        {Form}
+    </>
 }
 
 export default Login

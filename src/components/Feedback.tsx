@@ -124,7 +124,7 @@ export function FeedbackTable() {
             }
         }
         fetchData();
-    }, [setPrefix]);
+    }, [prefix]);
 
     return (
         isLogin ? (

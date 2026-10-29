@@ -1,5 +1,7 @@
 FROM node:20 as builder
 WORKDIR /app
+ARG REACT_APP_API_BASE_URL=http://localhost:9000/api/v1.0
+ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
 COPY package*.json ./
 RUN npm ci
 COPY . .

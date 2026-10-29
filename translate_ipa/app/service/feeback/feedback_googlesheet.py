@@ -8,6 +8,8 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 def auth_googleshet():
     keyfile_dict = GOOGLE_SHEET_JSON_DICT
+    if not keyfile_dict:
+        raise RuntimeError("GOOGLE_SHEET_CREDENTIALS_JSON is not configured")
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     credentials = ServiceAccountCredentials.from_json_keyfile_dict(keyfile_dict, scope)
     client = gspread.authorize(credentials)

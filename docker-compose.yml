@@ -5,12 +5,19 @@ services:
     image: ipa-be:latest
     ports:
       - "9000:9000"
+    environment:
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-local-development-only-change-me}
+      GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID:-}
+      GOOGLE_SHEET_RANGE_FEEDBACK: ${GOOGLE_SHEET_RANGE_FEEDBACK:-Data}
+      GOOGLE_SHEET_CREDENTIALS_JSON: ${GOOGLE_SHEET_CREDENTIALS_JSON:-}
     networks:
       - ipa-network
 
   frontend:
     build:
       context: ./ui
+      args:
+        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL:-http://localhost:9000/api/v1.0}
     image: ipa-fe:latest
     depends_on:
       - backend

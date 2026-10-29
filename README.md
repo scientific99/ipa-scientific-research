@@ -58,9 +58,19 @@ npm start
 
 Frontend local chạy tại `http://localhost:3000`. Địa chỉ API được cấu hình trong `ui/src/constants.ts`; mặc định là `http://localhost:9000/api/v1.0`.
 
+Tạo file `.env` ở root từ mẫu để cấu hình frontend và backend:
+
+```bash
+cp .env.example .env
+```
+
+Điền secret JWT và Google Sheets credentials vào `.env` nếu cần chức năng đăng nhập/feedback; đặt `REACT_APP_API_BASE_URL` theo địa chỉ backend mà trình duyệt truy cập được. Không commit file `.env` hoặc secret. Frontend nhận API URL trong lúc Docker image được build.
+
 ## Kiểm tra build
 
 ```bash
 docker compose config
 cd ui && npm run build
 ```
+
+Xem [CONTRIBUTING.md](CONTRIBUTING.md) để biết các bước kiểm tra trước khi gửi thay đổi.

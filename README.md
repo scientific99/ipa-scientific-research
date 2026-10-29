@@ -174,4 +174,4 @@ CI trên GitHub Actions thực hiện kiểm tra Compose, compile Python và bui
 
 ## Liên hệ
 
-Mr Hai — [dinhbahai99@gmail.com](mailto:dinhbahai99@gmail.com)
+Mr. Hai — [dinhbahai99@gmail.com](mailto:dinhbahai99@gmail.com)

@@ -1,0 +1,71 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
+
+@media screen and (min-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
+  .main {
+    display: flex;
+  }
+  .left {
+    width: 50%;
+  }
+  .right {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    display: block;
+  }
+  .main,
+  .left {
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }
+}
+
+.font-text {
+  font-family: "Roboto,sans-serif";
+  /* font-family: "Source Sance Pro", sans-serif; */
+}
+
+.span-choose {
+  @apply mx-2 inline-block cursor-pointer px-1 py-2 text-lg;
+  color: #2a2a86 !important;
+  font-weight: 500;
+  font-family: "Roboto,sans-serif";
+  border-bottom: 3px solid #15497d;
+  font-size: 20px;
+  transition:
+    /* color 1s ease, */ border-bottom 0.3s linear;
+}
+
+.span-choose::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  border-bottom: 3px solid #15497d;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.span-not-choose {
+  @apply mx-2 inline-block cursor-pointer px-1 py-2 text-lg;
+
+  font-size: 20px;
+  font-family: "Roboto,sans-serif";
+  color: rgb(108, 108, 108) !important;
+}

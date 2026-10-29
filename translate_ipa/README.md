@@ -6,6 +6,8 @@ Hệ thống đặc trưng ngữ âm và thiết kế trang web phiên âm tiế
 
 https://github.com/HaiDB1999/translate-ui
 
+Hướng dẫn chạy toàn bộ monorepo nằm tại [README ở thư mục root](../README.md).
+
 ## Getting started
 
 - python version: 3.11.3

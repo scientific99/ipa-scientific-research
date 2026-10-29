@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# UI — transactionIPA
 
 UI project convert vietnamese to ipa
+
+Hướng dẫn chạy toàn bộ monorepo nằm tại [README ở thư mục root](../README.md). API local mặc định là `http://localhost:9000/api/v1.0` và có thể ghi đè bằng biến `REACT_APP_API_BASE_URL` khi build/chạy frontend.
 
 ## Available Scripts
 

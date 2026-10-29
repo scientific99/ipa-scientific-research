@@ -24,6 +24,6 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           # Thực hiện các lệnh trên server
-          cd /app/be/translate_ipa
-          sh run-project.sh
+          cd /app/ipa
+          docker compose up --build -d backend
 

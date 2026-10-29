@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_jwt_extended import create_access_token
 
 def validate_auth(username, password):
-    if username != "admin" or password != "malueihnmeohnhna":
+    if username != "admin" or password != "6tt8TfLEbDvuf0x1":
         return jsonify({'message': 'Invalid username or password'}), 401
 
     access_token = create_access_token(identity=username)
